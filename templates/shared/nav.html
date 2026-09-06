@@ -36,10 +36,12 @@
                             <i>Profile</i>
                         </a>
                     </li>
-                    <form action="{% url 'accounts:logout' %}" method="post">
-                        {% csrf_token %}
-                        <button class="button"><i>Logout</i></button>
-                    </form>
+                    <li class="nav-item">
+                        <form action="{% url 'accounts:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button class="nav-logout-btn"><i>Logout</i></button>
+                        </form>
+                    </li>
                 {% else %}
                     <li class="nav-item">
 
