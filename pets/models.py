@@ -28,6 +28,12 @@ class Pet(models.Model):
         return self.name
 
     def save(self, *args, **kwargs) -> None:
-        self.slug = slugify(f"{self.name}-{self.pk}")
-        super().save(*args, **kwargs)
+        if not self.pk:
+            super().save(*args, **kwargs)
+            kwargs.pop('force_insert', None)
 
+        self.slug = slugify(f"{self.name}-{self.pk}")
+        if kwargs.get('update_fields') is not None:
+            kwargs['update_fields'] = set(kwargs['update_fields']) | {'slug'}
+
+        return super().save(*args, **kwargs)
